@@ -5,7 +5,6 @@ class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         last_read_value = -101
         i = 0
-        j = 0
         unique_value_index = 0
         while(i < len(nums)):
             if nums[i] > last_read_value:
