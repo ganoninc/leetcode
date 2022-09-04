@@ -67,10 +67,10 @@ class Solution:
 
     def evaluate_char_using_check_chain(self, check_chain_index:int, char_index:int, s:string):
         if self.is_valid == False:
-            if check_chain_index >= len(self.check_chain[check_chain_index]) or char_index >= len(s):
+            if check_chain_index >= len(self.check_chain) or char_index >= len(s):
                 return None
 
-            if check_chain_index == len(self.check_chain[check_chain_index]) - 1 and char_index == len(s) - 1:
+            if check_chain_index == len(self.check_chain) - 1 and char_index == len(s) - 1:
                 self.is_valid = True
             else:
                 if self.check_chain[check_chain_index]["check_name"] == self.CHECK_REPEATED_ANY_SINGLE_CHARACTER:
@@ -119,12 +119,12 @@ class Solution:
             if identified_symbol == self.SYMBOL_ZERO_OR_MORE_REPETITION:
                 if previsouly_read_char["identified_symbol"] == self.SYMBOL_LOWERCASE_ENGLISH_LETTER:
                     self.check_chain.append({
-                        "check_name" : self.CHECK_REPEATED_ANY_SINGLE_CHARACTER,
+                        "check_name" : self.CHECK_REPEATED_LOWER_CASE_ENGLISH_LETTER,
+                        "lower_case_english_letter": previsouly_read_char["value"]
                     })
                 elif previsouly_read_char["identified_symbol"] == self.SYMBOL_ANY_SINGLE_CHARACTER:
                     self.check_chain.append({
-                        "check_name" : self.CHECK_REPEATED_LOWER_CASE_ENGLISH_LETTER,
-                        "lower_case_english_letter": previsouly_read_char["value"]
+                        "check_name" : self.CHECK_REPEATED_ANY_SINGLE_CHARACTER,
                     })
             elif identified_symbol == self.SYMBOL_ANY_SINGLE_CHARACTER:
                 if previsouly_read_char["identified_symbol"] == self.SYMBOL_LOWERCASE_ENGLISH_LETTER:
@@ -162,4 +162,4 @@ class Solution:
 
 
 solution = Solution()
-print(solution.isMatch("aaabd", "a*"))
+print(solution.isMatch("aba", "abb"))
