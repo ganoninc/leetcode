@@ -67,18 +67,29 @@ class Solution:
 
     def evaluate_char_using_check_chain(self, check_chain_index:int, char_index:int, s:string):
         if self.is_valid == False:
-            if check_chain_index >= len(self.check_chain) or char_index >= len(s):
+            if check_chain_index >= len(self.check_chain) and char_index < len(s):
+                return None
+            
+            if char_index >= len(s) and check_chain_index < len(self.check_chain) and (self.check_chain[check_chain_index]["check_name"] != self.CHECK_REPEATED_ANY_SINGLE_CHARACTER and self.check_chain[check_chain_index]["check_name"] != self.CHECK_REPEATED_LOWER_CASE_ENGLISH_LETTER):
                 return None
 
-            if check_chain_index == len(self.check_chain) - 1 and char_index == len(s) - 1:
+            if check_chain_index == len(self.check_chain) and char_index == len(s):
                 self.is_valid = True
             else:
                 if self.check_chain[check_chain_index]["check_name"] == self.CHECK_REPEATED_ANY_SINGLE_CHARACTER:
+                    if char_index >= len(s):
+                        self.is_valid = True
+                        return None
+                        
                     self.evaluate_char_using_check_chain(check_chain_index, char_index + 1, s)
                     self.evaluate_char_using_check_chain(check_chain_index + 1, char_index + 1, s)
                     self.evaluate_char_using_check_chain(check_chain_index + 1, char_index, s)
 
                 elif self.check_chain[check_chain_index]["check_name"] == self.CHECK_REPEATED_LOWER_CASE_ENGLISH_LETTER:
+                    if char_index >= len(s):
+                        self.is_valid = True
+                        return None
+
                     if self.apply_check_repeated_lower_case_english_letter(s[char_index], self.check_chain[check_chain_index]["lower_case_english_letter"]):
                         self.evaluate_char_using_check_chain(check_chain_index, char_index + 1, s)
                         self.evaluate_char_using_check_chain(check_chain_index + 1, char_index + 1, s)
@@ -102,7 +113,7 @@ class Solution:
 
     def isMatch(self, s: str, p: str) -> bool:
         self.init_check_chain(p)
-        print(self.check_chain)
+        # print(self.check_chain)
         has_passed_the_check_chain = self.evaluate_string_using_check_chain(s)
         return has_passed_the_check_chain
 
@@ -162,4 +173,4 @@ class Solution:
 
 
 solution = Solution()
-print(solution.isMatch("aba", "abb"))
+print(solution.isMatch("ab", ".*"))
