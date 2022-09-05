@@ -55,7 +55,8 @@ class Solution:
 
         
     def apply_check_repeated_lower_case_english_letter(self, c:string, accepted_lowercase_english_letter:string) -> bool:
-        return c == accepted_lowercase_english_letter
+        # return c == accepted_lowercase_english_letter
+        return True
 
 
     def evaluate_string_using_check_chain(self, s:string) -> bool:
@@ -80,7 +81,7 @@ class Solution:
                     if char_index >= len(s):
                         self.is_valid = True
                         return None
-                        
+
                     self.evaluate_char_using_check_chain(check_chain_index, char_index + 1, s)
                     self.evaluate_char_using_check_chain(check_chain_index + 1, char_index + 1, s)
                     self.evaluate_char_using_check_chain(check_chain_index + 1, char_index, s)
@@ -119,6 +120,7 @@ class Solution:
 
 
     def init_check_chain(self, p:str) -> None:
+        self.check_chain = []
         previsouly_read_char = {
             "identified_symbol" :None,
             "value" : "",
@@ -173,4 +175,4 @@ class Solution:
 
 
 solution = Solution()
-print(solution.isMatch("ab", ".*"))
+print(solution.isMatch("aab", "c*a*b"))
