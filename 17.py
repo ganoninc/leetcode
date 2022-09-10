@@ -22,53 +22,6 @@ class Solution:
         "9": ['w', 'x', 'y', 'z'],
     }
 
-    def visite(self, p_node, q_node, visited_p_node, visited_q_node) -> bool:
-        if p_node == None and q_node != None:
-            return False
-
-        if p_node != None and q_node == None:
-            return False
-
-        if p_node == None and q_node == None:
-            return True
-
-        if p_node.val != q_node.val:
-            return False
-        
-        if p_node not in visited_p_node and q_node not in visited_q_node:
-            visited_p_node.append(p_node)
-            visited_q_node.append(q_node)
-            if p_node.left != None:
-                if not self.visite(p_node.left, q_node.left, visited_p_node, visited_q_node):
-                    return False
-                
-            if p_node.right != None:
-                if not self.visite(p_node.right, q_node.right, visited_p_node, visited_q_node):
-                    return False
-
-            if p_node.left == None and q_node.left != None:
-                return False
-
-            if p_node.right == None and q_node.right != None:
-                return False
-
-            return True
-
-        elif p_node not in visited_p_node and q_node in visited_q_node:
-            return False
-            
-        elif p_node in visited_p_node and q_node not in visited_q_node:
-            return False
-
-        else:
-            return True
-
-
-    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        visited_p_node = []
-        visited_q_node = []
-        return self.visite(p, q, visited_p_node, visited_q_node)
-
     def addTreeNodesToTreeEnds(self, tree_node_values: List, tree: TreeNode):
         if len(tree.sons) == 0:
             for tree_node_value in tree_node_values:
