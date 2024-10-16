@@ -1,5 +1,5 @@
-# leetcode
+# LeetCode Solutions
 
-Here are my answers to some leetcode challenges. 
+This repository contains my solutions to various LeetCode challenges.
 
-I don't spend time formatting and cleaning the code of my answers as I just head to the next challenge once my answer has been accepted.
+Please note that I prioritize solving problems over formatting and refining my code. Once my solution is accepted, I move on to the next challenge, so the code may not be polished.
