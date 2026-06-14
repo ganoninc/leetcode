@@ -3,33 +3,23 @@ from typing import List
 
 class Solution:
     def maxArea(self, height: List[int]) -> int:
-        max_area_result = 0
         i = 0
         j = len(height) - 1
+        max_water_area = 0
 
-        while j != i:
-            lowest_vertical_line_index = -1
-            if height[i] > height[j]:
-                lowest_vertical_line = height[j]
-                lowest_vertical_line_index = j
-            elif height[i] < height[j]:
-                lowest_vertical_line = height[i]
-                lowest_vertical_line_index = i
+        while i < j:
+            min_height_index = i
+            if height[j] < height[min_height_index]:
+                min_height_index = j
+
+            max_water_area = max(max_water_area, height[min_height_index] * (j- i))
+
+            if min_height_index == i:
+                i += 1
             else:
-                lowest_vertical_line = height[i]
-                lowest_vertical_line_index = i
+                j -= 1
 
-            amount_of_water = lowest_vertical_line * (j - i)
-
-            if max_area_result < amount_of_water:
-                max_area_result = amount_of_water
-
-            if lowest_vertical_line_index == i:
-                i = i + 1
-            else:
-                j = j - 1
-
-        return max_area_result
+        return max_water_area
     
 solution = Solution()
 print(solution.maxArea([1,8,6,2,5,4,8,3,7]))
