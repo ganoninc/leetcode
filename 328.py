@@ -9,32 +9,20 @@ from typing import Optional
 
 class Solution:
     def oddEvenList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head:
-            return None
-        
-        if not head.next:
+        if not head or not head.next:
             return head
         
-        odd_head = ListNode()
-        odd_curr = odd_head
-        even_head = ListNode()
-        even_curr = even_head
+        odd = head
+        even = head.next
+        even_start = even
 
-        curr = head
-        i = 1
+        while even and even.next:
+            odd.next = even.next
+            odd = even.next
 
-        while curr != None:
-            if i % 2 == 0:
-                even_curr.next = curr
-                even_curr = even_curr.next
-            else:
-                odd_curr.next = curr
-                odd_curr = odd_curr.next
+            even.next = odd.next
+            even = odd.next
 
-            i += 1
-            curr = curr.next
+        odd.next = even_start
 
-        odd_curr.next = even_head.next
-        even_curr.next = None
-
-        return odd_head.next
+        return head
