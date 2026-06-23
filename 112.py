@@ -8,35 +8,19 @@ class TreeNode:
         self.left = left
         self.right = right
 
-
+        
 class Solution:
-    def visiteNode(self, targetSum, subtotal, node):
-        is_left_valid = False
-        is_right_valid = False
-        if node.left != None:
-            is_left_valid = self.visiteNode(targetSum, subtotal + node.val, node.left)
+    def dfs(self, node: Optional[TreeNode], targetSum: int, ancestor_sum) -> bool:
+        if node is None:
+            return False
+        
+        current_sum = ancestor_sum + node.val
 
-        if node.right != None:
-            is_right_valid = self.visiteNode(targetSum, subtotal + node.val, node.right)
-
-        if is_left_valid or is_right_valid:
+        if current_sum == targetSum and node.left is None and node.right is None:
             return True
-
-        if node.left == None and node.right == None:
-            if node.val + subtotal == targetSum:
-                return True
-                
-                
-        return False
-
-
+        
+        return self.dfs(node.left, targetSum, ancestor_sum=current_sum) or self.dfs(node.right, targetSum, ancestor_sum=current_sum)
 
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
-        if root == None:
-            return False
-
-        return self.visiteNode(targetSum, 0, root)
-
-solution = Solution()
-# print(solution.hasPathSum(TreeNode(1, TreeNode(2, None, TreeNode(3)), TreeNode(2, TreeNode(3))), 4))
-print(solution.hasPathSum(TreeNode(1, TreeNode(2), TreeNode(3)), 4))
+        return self.dfs(root, targetSum, 0)
+        
