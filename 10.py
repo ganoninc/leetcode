@@ -55,8 +55,7 @@ class Solution:
 
         
     def apply_check_repeated_lower_case_english_letter(self, c:string, accepted_lowercase_english_letter:string) -> bool:
-        # return c == accepted_lowercase_english_letter
-        return True
+        return c == accepted_lowercase_english_letter
 
 
     def evaluate_string_using_check_chain(self, s:string) -> bool:
@@ -68,6 +67,9 @@ class Solution:
 
     def evaluate_char_using_check_chain(self, check_chain_index:int, char_index:int, s:string):
         if self.is_valid == False:
+            if char_index >= len(s):
+                return None
+
             if check_chain_index >= len(self.check_chain) and char_index < len(s):
                 return None
             
@@ -78,7 +80,7 @@ class Solution:
                 self.is_valid = True
             else:
                 if self.check_chain[check_chain_index]["check_name"] == self.CHECK_REPEATED_ANY_SINGLE_CHARACTER:
-                    if char_index >= len(s):
+                    if char_index >= len(s) and char_index == len(s) -1:
                         self.is_valid = True
                         return None
 
@@ -96,7 +98,12 @@ class Solution:
                         self.evaluate_char_using_check_chain(check_chain_index + 1, char_index + 1, s)
                         self.evaluate_char_using_check_chain(check_chain_index + 1, char_index, s)
                     else:
-                        return None
+                        if char_index == 0 and check_chain_index == 0:
+                            self.evaluate_char_using_check_chain(check_chain_index, char_index + 1, s)
+                            self.evaluate_char_using_check_chain(check_chain_index + 1, char_index + 1, s)
+                            self.evaluate_char_using_check_chain(check_chain_index + 1, char_index, s)
+                        else:
+                            return None
 
                 elif self.check_chain[check_chain_index]["check_name"] == self.CHECK_UNIQUE_ANY_SINGLE_CHARACTER:
                     if self.apply_check_unique_any_single_character(s[char_index]):
@@ -175,4 +182,4 @@ class Solution:
 
 
 solution = Solution()
-print(solution.isMatch("aab", "c*a*b"))
+print(solution.isMatch("abc", ".*c"))

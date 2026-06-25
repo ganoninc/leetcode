@@ -56,4 +56,4 @@ class Solution {
 }
 
 const solution = new Solution();
-solution.reverseBits(483);
+console.log(solution.reverseBits(483));
